@@ -11,7 +11,7 @@ public class BufferItem {
         this.buffer = new Object[size];
         this.capacitiy = size;
         this.front = 0;
-        this.rear = size - 1;
+        this.rear = 0;
     }
 
     public boolean isEmpty(){

@@ -34,7 +34,6 @@ public class Buffer{
             if(!mutex.tryAcquire() || (empty.availablePermits() == 0) ) return -1;
             mutex.acquire();
             empty.acquire();
-
             full.release();
 
             //critical section
