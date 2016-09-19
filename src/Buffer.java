@@ -21,29 +21,54 @@ public class Buffer{
 
     }
 
-    public int insert_item(Object item) throws InterruptedException {
+    /**
+     * Inserts and item if there is a mutex available and if the buffer is not full.
+     * @param item to add
+     * @return return code
+     * @throws InterruptedException
+     */
+    public int insert_item(Object item) {
 
-        if(!mutex.tryAcquire() || (empty.availablePermits() == 0) ) return -1;
+        try {
+            //acquire semaphores
+            if(!mutex.tryAcquire() || (empty.availablePermits() == 0) ) return -1;
+            mutex.acquire();
+            empty.acquire();
 
-        empty.release();
-        full.acquire();
-        //acquire semaphores
-        //critical section
-        //insert the item
+            full.release();
 
-        //release semaphores
+            //critical section
+            //insert the item
+            bufferitem.enqueue(item);
+
+            //release semaphores
+            mutex.release();
+            return 1;
+
+
+        } catch (InterruptedException e) {return -1;}
+          catch (ArrayStoreException e){return -1;}
     }
 
     public Object remove_item() {
+        try {
+            //acquire semaphores
+            if(!mutex.tryAcquire() || (full.availablePermits() == 0) ) return -1;
+            mutex.acquire();
+            full.acquire();
 
-        //acquire semaphores
+            empty.release();
 
-        //critical section
-        //remove the item
+            //critical section
+            //get item
+            Object toReturn = bufferitem.dequeue();
 
-        //release semaphores
+            //release semaphores
+            mutex.release();
+            return toReturn;
 
-        //return the item
+        } catch (InterruptedException e) {return -1;}
+        catch (ArrayStoreException e){return -1;}
 
     }
 
