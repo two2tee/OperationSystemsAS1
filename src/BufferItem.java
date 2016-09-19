@@ -1,9 +1,10 @@
 /**
- * Created by DennisThinhTan on 19-09-2016.
+ * Represents a buffer that utilize a circular queue
  */
 public class BufferItem {
     private int rear,front;
     private int capacitiy;
+    private int currentSize;
     private Object[] buffer;
 
     public BufferItem(int size) {
@@ -12,27 +13,26 @@ public class BufferItem {
         this.capacitiy = size;
         this.front = 0;
         this.rear = 0;
+        this.currentSize = 0;
     }
 
     public boolean isEmpty(){
-        return rear == front;
+        return currentSize == 0;
     }
 
     public int size(){
-        if (rear > front)
-            return (rear-front);
-        else
-            return (capacitiy - front + rear);
+        return currentSize;
     }
 
     public boolean isFull(){
-        return (rear-front == -1 || capacitiy == -1);
+        return (currentSize == capacitiy);
     }
 
     public void enqueue(Object item){
         if(isFull()) throw new ArrayStoreException("buffer is full");
         buffer[rear] = item; //Puts item in the rear of the queue
         rear = (rear+1)% capacitiy; // increment rear queue position
+        currentSize = currentSize+1;
     }
 
     public Object dequeue(){
@@ -40,6 +40,7 @@ public class BufferItem {
         Object toReturn = buffer[front];
         buffer[front] = null;
         front = (front+1)%capacitiy; //increment front queue position
+        currentSize = currentSize-1;
         return toReturn;
     }
 }
