@@ -7,13 +7,13 @@ public class Buffer{
 
     // remember to initialize the semaphores in the constructor
     private Semaphore empty, full, mutex;
-    private Object[] bufferitem;
+    private BufferItem bufferitem;
 
     //more private fields such as a container object for holding the buffer items
 
     public Buffer() {
-        bufferitem = new Object[Constants.BUFFER_SIZE];
-        empty = new Semaphore(bufferitem.length);
+        bufferitem = new BufferItem(Constants.BUFFER_SIZE); //Initialize buffer with capacity of buffer size
+        empty = new Semaphore(Constants.BUFFER_SIZE);
         full = new Semaphore(0);
         mutex = new Semaphore(1);
 
