@@ -30,7 +30,7 @@ public class BufferItem {
     }
 
     public void enqueue(Object item){
-        if(isFull()) throw new ArrayStoreException("buffer is full")k;
+        if(isFull()) throw new ArrayStoreException("buffer is full");
         buffer[rear] = item; //Puts item in the rear of the queue
         rear = (rear+1)% capacitiy; // increment rear queue position
     }
