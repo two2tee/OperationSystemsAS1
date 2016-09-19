@@ -72,6 +72,7 @@ public class Buffer{
     }
 
     public static void main(String[] args) {
+        Buffer buffer = new Buffer();
         // your code
         // multiple producer/consumer threads need to be created based on input parameters
 
