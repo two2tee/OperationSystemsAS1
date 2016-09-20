@@ -1,3 +1,5 @@
+package utilities;
+
 /**
  * Represents constants used
  */

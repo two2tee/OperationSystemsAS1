@@ -1,16 +1,18 @@
+package tests;
+
 import junit.framework.TestCase;
 
 /**
- * Test for the circular queue implemented in BufferItem
+ * Test for the circular queue implemented in utilities.CircularQueue
  */
-public class BufferItemTest extends TestCase {
+public class CircularQueueTest extends TestCase {
     private final int BUFFER_SIZE = 5;
     String mockItem = "item";
-    BufferItem SUT;
+    CircularQueue SUT;
 
 
     public void setUp() {
-        SUT = new BufferItem(BUFFER_SIZE);
+        SUT = new CircularQueue(BUFFER_SIZE);
     }
 
     public void testIsEmpty() {

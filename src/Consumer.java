@@ -1,3 +1,5 @@
+import interfaces.IBuffer;
+
 import java.nio.Buffer;
 
 /**
@@ -7,7 +9,7 @@ public class Consumer implements Runnable {
 
     private Buffer buffer;
 
-    public Consumer(Buffer _buffer) {
+    public Consumer(IBuffer buffer) {
         // your code
     }
 
