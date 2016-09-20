@@ -1,5 +1,6 @@
 import interfaces.IBuffer;
 import interfaces.IQueue;
+import utilities.BufferItem;
 import utilities.Constants;
 
 import java.util.concurrent.Semaphore;
@@ -29,7 +30,7 @@ public class BoundedBuffer implements IBuffer {
      * @return return code
      * @throws InterruptedException
      */
-    public synchronized int insert_item(Object item)
+    public synchronized int insert_item(BufferItem item)
     {
         try
         {
@@ -55,11 +56,11 @@ public class BoundedBuffer implements IBuffer {
      * Removes item if there is a mutex available and the buffer is not full.
      * @return the item removed
      */
-    public synchronized Object remove_item() {
+    public synchronized BufferItem remove_item() {
         try
         {
             //acquire semaphores
-            if(!mutex.tryAcquire() || (full.availablePermits() == 0) ) { return -1; }
+            if(!mutex.tryAcquire() || (full.availablePermits() == 0) ) { return null; }
             mutex.acquire();
             full.acquire();
 
@@ -67,15 +68,15 @@ public class BoundedBuffer implements IBuffer {
 
             //critical section
             //get item
-            Object toReturn = bufferQueue.dequeue();
+            BufferItem toReturn = (BufferItem) bufferQueue.dequeue();
 
             //release semaphores
             mutex.release();
             return toReturn;
 
         }
-        catch (InterruptedException e) { return -1; }
-        catch (ArrayStoreException e) { return -1; }
+        catch (InterruptedException e) { return null; }
+        catch (ArrayStoreException e) { return null; }
 
     }
 

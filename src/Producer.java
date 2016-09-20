@@ -9,7 +9,7 @@ import java.util.UUID;
 public class Producer implements Runnable {
 
     private IBuffer buffer;
-    private UUID uuid;
+    private UUID producerId;
     private int itemCounter;
     private Object itemToProduce;
 
@@ -17,7 +17,7 @@ public class Producer implements Runnable {
         this.buffer = buffer;
         this.itemCounter = 0;
         itemToProduce = item;
-        uuid = UUID.randomUUID();
+        producerId = UUID.randomUUID();
 
     }
 
@@ -25,12 +25,13 @@ public class Producer implements Runnable {
      * Run production
      */
     public void run() {
-        BufferItem item = new BufferItem(uuid,itemCounter,itemToProduce);
+        BufferItem item = new BufferItem(producerId,itemCounter,itemToProduce);
         itemCounter = itemCounter+1;
 
         //While unavailable... like if full or mutex is unavailable keep trying
 
         //When done
+        printProducedItem(item);
     }
 
 
@@ -38,8 +39,8 @@ public class Producer implements Runnable {
      * The UUID of the producer
      * @return UUID in string format
      */
-    public String getUuid() {
-        return uuid.toString();
+    public String getProducerId() {
+        return producerId.toString();
     }
 
     /**
@@ -56,5 +57,9 @@ public class Producer implements Runnable {
      */
     public Object getItemToProduce() {
         return itemToProduce;
+    }
+
+    private void printProducedItem(BufferItem item){
+        System.out.println("Producer: " + producerId.toString() + " produced item: " + item.getItemId());
     }
 }

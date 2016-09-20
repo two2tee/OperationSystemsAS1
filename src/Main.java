@@ -24,17 +24,16 @@ public class Main {
         /* 2. Initialize buffer */
         IBuffer sharedBuffer = new BoundedBuffer(new CircularQueue(Constants.BUFFER_SIZE));
 
-        /* 3. Create producer threads */
-        Producer producer = new Producer(sharedBuffer);
+        /* 3. Create producer threads --- use for loops to create many */
+        Producer producer = new Producer(sharedBuffer,"item");
 
-        /* 4. Create consumer threads */
+        /* 4. Create consumer threads --- use for loops to create many */
         Consumer consumer = new Consumer(sharedBuffer);
 
         /* 5. Sleep */
 
 
         /* 6. Exit */
-
     }
 
 }
